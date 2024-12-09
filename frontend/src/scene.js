@@ -43,7 +43,7 @@ let last = performance.now()
 let pointer, raycaster
 let computeVelocity, computePosition, effectController
 
-const BIRDS = 16384 * 16
+const BIRDS = 16384 * 16 // 262144
 const SPEED_LIMIT = 9.0
 const BOUNDS = 800,
   BOUNDS_HALF = BOUNDS / 2
@@ -98,7 +98,15 @@ class BirdGeometry extends THREE.BufferGeometry {
   }
 }
 
-export function initScene() {
+export async function initScene() {
+  let isAvailable =
+    typeof navigator !== "undefined" && navigator.gpu !== undefined
+
+  if (typeof window !== "undefined" && isAvailable) {
+    isAvailable = await navigator.gpu.requestAdapter()
+    console.log(`WebGPU Running: ${Boolean(isAvailable)}`)
+  }
+
   container = document.createElement("div")
   document.body.appendChild(container)
 

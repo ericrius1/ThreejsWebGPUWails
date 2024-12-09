@@ -28,7 +28,10 @@ func main() {
 		Bind: []interface{}{
 			app,
 		},
-		Fullscreen:true ,
+		Fullscreen:true,
+		// Debug: options.Debug{
+		// 	OpenInspectorOnStartup: true,
+		// },
 	})
 
 	if err != nil {
